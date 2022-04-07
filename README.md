@@ -9,4 +9,5 @@ This project is still a WIP, and its only done for research and experimentation 
 - Central Server thats able to manage the nodes from the botnet
 - Central Server can perform healthchecks on the different stations
 - The connections between the Central Server and its stations is encrypted
+- The agent binary is multi platform
 ---
