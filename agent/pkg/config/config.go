@@ -6,23 +6,32 @@ import (
 	"io/ioutil"
 )
 
-type Config struct {
-	TcpAddr  string `json:"TCPAddr"`
-	Shell    string `json:"Shell"`
-	Plaftorm string `json:"Platform"`
+var (
+	TcpAddr string
+	Shell  string
+	Platform string
+	config *confStruct
+)
+
+type confStruct struct {
+	TcpAddr string `json:"TCPAddr"`
+	Shell string `json : "Shell"`
+	Plaftorm string `json : "Platform"`
 }
 
-func NewConfig() (*Config, error) {
-	var config *Config
+func ReadConfig() error {
 	file, err := ioutil.ReadFile("config.json")
 	if err != nil {
-		fmt.Println("Error reading config", err)
-		return nil, err
+		fmt.Printf("Error reading config")
+		return err
 	}
 	err = json.Unmarshal(file, &config)
 	if err != nil {
-		fmt.Println("error unmarshalling config", err)
-		return nil, err
+		fmt.Println(err.Error())
+		return err
 	}
-	return config, err
+	TcpAddr = config.TcpAddr
+	Shell = config.Shell
+	Platform = config.Plaftorm
+	return nil
 }
