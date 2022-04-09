@@ -7,19 +7,19 @@ import (
 )
 
 var (
-	Host   string
-	Port   string
+	TcpAddr string
 	Shell  string
+	Platform string
 	config *confStruct
 )
 
 type confStruct struct {
-	Host  string `json : "Host"`
-	Port  string `json : "Port"`
+	TcpAddr string `json:"TCPAddr"`
 	Shell string `json : "Shell"`
+	Plaftorm string `json : "Platform"`
 }
 
-func readConfig() error {
+func ReadConfig() error {
 	file, err := ioutil.ReadFile("config.json")
 	if err != nil {
 		fmt.Printf("Error reading config")
@@ -30,8 +30,8 @@ func readConfig() error {
 		fmt.Println(err.Error())
 		return err
 	}
-	Host = config.Host
-	Port = config.Port
+	TcpAddr = config.TcpAddr
 	Shell = config.Shell
+	Platform = config.Plaftorm
 	return nil
 }

@@ -1,3 +1,3 @@
-module github.com/FKouhai/GoBotMan
+module agent
 
 go 1.18
