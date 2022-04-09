@@ -15,8 +15,8 @@ var (
 
 type confStruct struct {
 	TcpAddr string `json:"TCPAddr"`
-	Shell string `json : "Shell"`
-	Plaftorm string `json : "Platform"`
+	Shell string `json:"Shell"`
+	Plaftorm string `json:"Platform"`
 }
 
 func ReadConfig() error {

