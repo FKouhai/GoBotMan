@@ -10,9 +10,8 @@ pipeline {
   stages {
     stage("build"){
       steps {
-        sh 'go env'
-        sh 'ls -la ${WORKSPACE}'
-        sh 'go build -o agent_${BUILD_ID}_${BUILD_NUMBER} agent/agent.go'
+        echo 'Building the agent binary'
+        sh 'go build -o agent_${BUILD_ID}_${BUILD_NUMBER} src/agent/agent.go'
       }
     }
   }
