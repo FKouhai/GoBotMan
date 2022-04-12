@@ -5,15 +5,16 @@ pipeline {
   }
   environment {
     GO111MODULE="off"
+    CURRDATE=$(date +%m_%d_%y)
     GOPATH="${WORKSPACE}"
     BINDEST="${JENKINS_HOME}/binaries"
-    AGENTBIN="agent_$(date +%m_%d_%y)"
+    AGENTBIN="agent_${BUILD_ID}_${CURRDATE}"
   }
   stages {
     stage("build"){
       steps {
         echo 'Building the agent binary'
-        sh 'go build -o agent_${BUILD_ID}_${BUILD_NUMBER} src/agent/agent.go'
+        sh 'go build -o ${AGENTBIN} src/agent/agent.go'
       }
     }
   }
