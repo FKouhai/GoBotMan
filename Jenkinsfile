@@ -18,6 +18,7 @@ pipeline {
   post {
     success {
       echo 'Building has finished successfully'
+      sh 'cp agent_${BUILD_ID}_${BUILD_NUMBER} ${JENKINS_HOME/binaries}'
     }
     failure {
       echo 'Building has failed'
