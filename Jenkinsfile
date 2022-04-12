@@ -6,7 +6,7 @@ pipeline {
   environment {
     GO111MODULE="off"
     GOPATH="${WORKSPACE}"
-    BINDEST="${JENKINS_HOME}binaries"
+    BINDEST="${JENKINS_HOME}/binaries"
   }
   stages {
     stage("build"){
