@@ -7,6 +7,7 @@ pipeline {
     GO111MODULE="off"
     GOPATH="${WORKSPACE}"
     BINDEST="${JENKINS_HOME}/binaries"
+    AGENTBIN="agent_$(date +%m_%d_%y)"
   }
   stages {
     stage("build"){
@@ -19,7 +20,7 @@ pipeline {
   post {
     success {
       echo 'Building has finished successfully'
-      sh "cp agent_${BUILD_ID}_${BUILD_NUMBER} ${env.BINDEST}"
+      sh "cp ${AGENTBIN} ${env.BINDEST}"
     }
     failure {
       echo 'Building has failed'
