@@ -3,11 +3,15 @@ pipeline {
   tools {
     go '1.18'
   }
+  environment {
+    GO111MODULE="off"
+    GOPATH="${WORKSPACE}"
+  }
   stages {
     stage("build"){
       steps {
         sh 'go env'
-        sh 'GOPATH=${WORKSPACE} go build -o agent_${BUILD_ID}_${BUILD_NUMBER} agent/agent.go'
+        sh 'go build -o agent_${BUILD_ID}_${BUILD_NUMBER} agent/agent.go'
       }
     }
   }
