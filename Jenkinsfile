@@ -1,7 +1,5 @@
 pipeline {
   agent any
-    environment {
-    }
   stages {
     stage("build"){
       steps {
@@ -11,9 +9,6 @@ pipeline {
     }
   }
   post {
-    always {
-      //
-    }
     success {
       echo 'Building has finished successfully'
     }
