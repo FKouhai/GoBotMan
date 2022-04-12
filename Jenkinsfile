@@ -19,7 +19,7 @@ pipeline {
   post {
     success {
       echo 'Building has finished successfully'
-      sh 'cp agent_${BUILD_ID}_${BUILD_NUMBER} ${env.BINDEST}'
+      sh "cp agent_${BUILD_ID}_${BUILD_NUMBER} ${env.BINDEST}"
     }
     failure {
       echo 'Building has failed'
