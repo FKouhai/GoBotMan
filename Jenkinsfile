@@ -7,7 +7,7 @@ pipeline {
     stage("build"){
       steps {
         sh 'go env'
-        sh 'GOPATH=${WORKSPACE/GoBotBuilder}go build -o agent_${BUILD_ID}_${BUILD_NUMBER} agent/agent.go'
+        sh 'GOPATH=${WORKSPACE} go build -o agent_${BUILD_ID}_${BUILD_NUMBER} agent/agent.go'
       }
     }
   }
