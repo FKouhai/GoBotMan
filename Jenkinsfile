@@ -5,7 +5,7 @@ pipeline {
   }
   environment {
     GO111MODULE="off"
-    CURRDATE=$(date +%m_%d_%y)
+    CURRDATE=$('date +%m_%d_%y')
     GOPATH="${WORKSPACE}"
     BINDEST="${JENKINS_HOME}/binaries"
     AGENTBIN="agent_${BUILD_ID}_${CURRDATE}"
