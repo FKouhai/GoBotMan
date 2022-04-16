@@ -23,7 +23,7 @@ func createDB(name string, user string, password string, dbHost string) *sql.DB{
     panic(err)
   }
   defer db.Close()
-  _, err := db.Exec("CREATE DATABASE IF NOT EXISTS"+name)
+  _, err := db.Exec("CREATE DATABASE IF NOT EXISTS "+name)
   if err != nil {
     panic(err)
   }
