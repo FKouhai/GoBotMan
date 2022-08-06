@@ -30,3 +30,7 @@ func createDB(name string, user string, password string, dbHost string) *sql.DB{
   return db
   db.Close()
 }
+
+func queryDB(){}
+
+func insertDB(){}
