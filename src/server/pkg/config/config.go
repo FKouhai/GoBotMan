@@ -2,25 +2,28 @@ package config
 
 import (
 	"encoding/json"
-	"fmt"
-	"io/ioutil"
+	"log"
+	"os"
 )
 
-type confStruct struct {
-	Network string `json:"Network"`
+type Config struct {
+	Agents []string `json:"Agents"`
 	Port string `json:"Port"`
+  User string `json:"user"`
+  Password string `json:"password"`
+  DbHost string `json:"dbhost"`
 }
 
-func NewConfig() (*Config, error) {
+func NewConfig(cfg_file string) (*Config, error) {
 	var config *Config
-	file, err := ioutil.ReadFile("config.json")
+	file, err := os.ReadFile(cfg_file)
 	if err != nil {
-		fmt.Printf("Error reading config", err)
+		log.Println("Error reading config -> ", err)
 		return nil,err
 	}
 	err = json.Unmarshal(file, &config)
 	if err != nil {
-		fmt.Println("Error unmarshalling config", err.Error())
+		log.Println("Error unmarshalling config -> ", err.Error())
 		return nil,err
 	}
 	return config,err
