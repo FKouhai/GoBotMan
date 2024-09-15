@@ -8,7 +8,8 @@ import (
 
 // Discover should test against the config 
 // if a station is listening it should add it to the database
-// if it is not -> dont add it
+// if it is not -> mark it as a dead node
+// Discover is the first step that populates the db
 func Discover (ipAddr net.IP, tcpPort string) (string) {
   tcpaddr := ipAddr.String() + ":" + tcpPort
   _, err := net.DialTimeout("tcp",tcpaddr, 5*time.Second)
@@ -23,8 +24,10 @@ func Discover (ipAddr net.IP, tcpPort string) (string) {
 }
 
 // HeartBeat should ping the stations every 500 ms
-// if there is a station that doesnt reply back remove it from database
-// if there is  a station that replies and isnt on the db adds it
+// if there is a station that doesnt reply mark the node as dead
+// if there is a station that replies and was marked as a dead node
+// mark it as alive
+// HeartBeat should be run as a go routine
 func HeartBeat(ipAddr net.IP, tcpPort string)(){
   log.Println("Checking hearbeat")
   ticker := time.NewTicker(500 * time.Millisecond)

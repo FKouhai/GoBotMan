@@ -1,4 +1,4 @@
-package server
+package main
 
 import (
 	"log"
@@ -9,6 +9,7 @@ import (
 var db dboperations.DBConn
 var station dboperations.StationModel
 
+// server should have a web API as well that allows to control the stations and returns its status
 func main() {
   cfg_file := os.Getenv("CFG_FILE")
   cfg, err := config.NewConfig(cfg_file)
