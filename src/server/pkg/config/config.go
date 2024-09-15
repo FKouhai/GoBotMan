@@ -18,7 +18,7 @@ func NewConfig(cfg_file string) (*Config, error) {
 	var config *Config
 	file, err := os.ReadFile(cfg_file)
 	if err != nil {
-		log.Println("Error reading config -> ", err)
+		log.Println("Error reading config -> ", err,cfg_file)
 		return nil,err
 	}
 	err = json.Unmarshal(file, &config)

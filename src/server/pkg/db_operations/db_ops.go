@@ -1,5 +1,4 @@
 package dboperations
-
 import (
   "database/sql"
   "log"
@@ -21,6 +20,7 @@ func (u *StationModel) TableName() string {
 }
 func (u *StationModel) CreateDB() *sql.DB{
   db, err := u.DbConn()
+  log.Println("Creating DB")
   if err != nil {
     log.Fatalln(err)
   }
@@ -32,10 +32,11 @@ func (u *StationModel) CreateDB() *sql.DB{
   return db
 }
 func (u *StationModel) DbConn() (*sql.DB, error) {
+  log.Println("Connecting to the DB")
   user := u.User
   password := u.Password
   dbHost := u.DbHost
-  connString := user + ":" + password + "tcp(" + dbHost + ")/"
+  connString := user + ":" + password + "@tcp(" + dbHost + ")/" + u.TableName()
   db, err := sql.Open("mysql", connString)
   if err != nil {
     log.Println(err)

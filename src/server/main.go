@@ -5,6 +5,9 @@ import (
 	"os"
 	"server/pkg/config"
 	"server/pkg/db_operations"
+  "server/pkg/discover"
+  "github.com/gin-gonic/gin"
+
 )
 var db dboperations.DBConn
 var station dboperations.StationModel
@@ -22,4 +25,7 @@ func main() {
   station.DBConn = db
   station.Station = cfg.Agents
   station.CreateDB()
+  discover.HeartBeat(station.Station,cfg.Port)
+  router := gin.Default()
+  log.Println(router.Run())
 }
